@@ -11,6 +11,9 @@ class QtApp < Qt::Widget
     super
 
     setWindowTitle "Center"
+
+    init_ui
+
     resize WIDTH, HEIGHT
 
     center
@@ -27,6 +30,13 @@ class QtApp < Qt::Widget
     y = (screenHeight - HEIGHT) / 2
 
     move x, y
+  end
+
+  def init_ui
+    quit = Qt::PushButton.new 'Quit', self
+    quit.resize 80, 30
+    quit.move ((WIDTH / 2) - 40), ((HEIGHT / 2) - 15)
+    connect quit, SIGNAL('clicked()'), $qApp, SLOT('quit()')
   end
 end
 
