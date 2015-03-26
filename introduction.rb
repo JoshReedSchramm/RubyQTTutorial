@@ -11,31 +11,32 @@ class QtApp < Qt::Widget
     super
 
     setWindowTitle "Center"
+    setWindowFlags Qt::FramelessWindowHint
 
-    init_ui
+    qdw = Qt::DesktopWidget.new
 
-    resize WIDTH, HEIGHT
+    resize qdw.width, qdw.height
 
-    center
+    init_ui(qdw)
+    move 0,0
+    # center(qdw)
     show
   end
 
-  def center
-    qdw = Qt::DesktopWidget.new
-
+  def center(qdw)
     screenWidth = qdw.width
     screenHeight = qdw.height
 
-    x = (screenWidth - WIDTH) / 2
-    y = (screenHeight - HEIGHT) / 2
+    x = screenWidth / 2
+    y = screenHeight / 2
 
     move x, y
   end
 
-  def init_ui
+  def init_ui(qdw)
     quit = Qt::PushButton.new 'Quit', self
     quit.resize 80, 30
-    quit.move ((WIDTH / 2) - 40), ((HEIGHT / 2) - 15)
+    quit.move (qdw.width / 2 - 40), (qdw.height / 2 - 15)
     connect quit, SIGNAL('clicked()'), $qApp, SLOT('quit()')
   end
 end
